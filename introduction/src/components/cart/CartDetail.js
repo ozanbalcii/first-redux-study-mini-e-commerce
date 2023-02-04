@@ -5,14 +5,11 @@ import * as cartActions from "../../redux/actions/cartActions";
 import {Table, Button } from "reactstrap";
 import alertify from "alertifyjs";
 
-
 class CartDetail extends Component {
-
-    removeFromCart(product){ //!karttan silme işlemi
+    removeFromCart(product){ 
         this.props.actions.removeFromCart(product);
         alertify.error(product.productName + " Deleted to cart", "success", 2);
     }
-
   render() {
     return (
       <div>
@@ -48,9 +45,7 @@ class CartDetail extends Component {
     );
   }
 }
-
 function mapDispatchToProps(dispatch) {
-  //!(actions'ı kullanabilmek için yapıyoruz): cart'da silme işlemi için yapıoz
   return {
     actions: {
       removeFromCart: bindActionCreators(cartActions.removeFromCart, dispatch),
@@ -59,10 +54,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  //!(bunu state'e bağlanmak için kullanıyoruz.) state'i props'a bağlıyoruz.
   return {
-    cart: state.cartReducer, //! cartReducer state'i kullandıgımız yerdir ve state'i o yüzden burdan alıyoruz
+    cart: state.cartReducer, 
   };
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(CartDetail);
