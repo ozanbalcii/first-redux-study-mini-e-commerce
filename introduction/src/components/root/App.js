@@ -6,11 +6,8 @@ import { Route, Routes } from 'react-router-dom';
 import CartDetail from '../cart/CartDetail';
 import AddOrUpdateProduct from '../products/AddOrUpdateProduct';
 
-
-
 function App() {
   return (
-  
    <Container>
       <Navi/>
       <Routes>
@@ -22,7 +19,4 @@ function App() {
    </Container>
   );
 }
-
-
-
 export default App;
