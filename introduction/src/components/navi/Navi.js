@@ -60,7 +60,6 @@ export default class Navi extends React.Component {
                   </Badge>
                 </h3>
               </NavItem>
-
               <CartSummary />
             </Nav>
           </Collapse>
