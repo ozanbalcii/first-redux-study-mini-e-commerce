@@ -1,7 +1,7 @@
 import * as actionTypes from "./actionTypes";
 
 export function getProductsSuccess(products) {
-  //! GET_CATEGORIES_SUCCESS bu actions için yeni state=categories olsun
+  //! GET_CATEGORIES_SUCCESS state=categories
   return { type: actionTypes.GET_PRODUCTS_SUCCESS, payload: products };
 }
 
@@ -14,29 +14,29 @@ export function updateProductSuccess(product) {
 
 export function saveProductApi(product) {
     return fetch(
-      "http://localhost:3000/products/" + (product.id || ""), //! adresten productların id'si varsa, method'dan devam yoksa boş döndür
+      "http://localhost:3000/products/" + (product.id || ""), 
       {
-        method: product.id ? "PUT" : "POST",                      //! product.id varsa PUT yoksa POST yap
-        headers: { "Conent-Type": "application/json" },           //! api yi json yaptık
-        body: JSON.stringify(product),                            //! body: adrese gönderdiğimiz datadır. gönderdiğimiz data'yı string yaptık. çünkü requestler stringtir.
+        method: product.id ? "PUT" : "POST",                   
+        headers: { "Conent-Type": "application/json" },           
+        body: JSON.stringify(product),                            
       }
     )
       .then(handleResponse)
       .catch(handleError);
   }
 
-export function saveProduct(product) { //! kısaca mantık id varsa update yapılacak ilgili ürüne, id yoksa yeni üründür ekleme yapılacak api'ye
+export function saveProduct(product) { 
     return function(dispatch) {
-        //! saveProductApi(product) ::::> yukarda fetch'i çağırmıstık, spagetti kod yazmamak için yukardakini direkt aldık  
-        return saveProductApi(product)               //* veritabanına save edildi
-        .then(savedProduct => {                         //* eklenecek olan veriyi  redux'a yolluyoruz burada
-            product.id?dispatch(updateProductSuccess(savedProduct)) : dispatch (createProductSuccess(savedProduct)) //? id varsa updateProductSuccess'i çalıştır, yoksa createProductSuccess
+
+        return saveProductApi(product)              
+        .then(savedProduct => {                         
+            product.id?dispatch(updateProductSuccess(savedProduct)) : dispatch (createProductSuccess(savedProduct)) 
         })
         .catch(error=> {throw error});
     }
 }
 
-export async function handleResponse(response) { //! saveProductApi'daki response'nin cevabına göre buarada karar veriyoruz
+export async function handleResponse(response) { //z
     if (response.ok) {
       return response.json();
     }
@@ -44,7 +44,7 @@ export async function handleResponse(response) { //! saveProductApi'daki respons
     throw new Error(error);
 }
 
-export function handleError(error) {  //! saveProductApi'daki error'a gelirse..
+export function handleError(error) { 
     console.error("Bir hata oluştu");
     throw error;
 }
@@ -52,18 +52,13 @@ export function handleError(error) {  //! saveProductApi'daki error'a gelirse..
 export function getProducts(categoryId) {
   //* products are exported to database or api
   return function (dispatch) {
-    // debugger; //! burda hata varsa burda durur, mantığı şudur: fonksiyonda buraya kadar geliyor mu gelmiyor mu diye görebiliriz(google'da)
+    // debugger; 
     let url = "http://localhost:3000/products";
     if (categoryId) {
-      url = url + "?categoryId=" + categoryId; //? kullandıgımız api'ye göre yazdık bunu, yani bu şuanki apinin özelliği
+      url = url + "?categoryId=" + categoryId; 
     }
     return fetch(url)
-      .then((response) => response.json()) //! Her then bir önceki then'in sonucuyla ilgilenir
+      .then((response) => response.json()) 
       .then((result) => dispatch(getProductsSuccess(result)));
   };
 }
-
-
-
-
-
