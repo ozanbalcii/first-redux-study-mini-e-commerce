@@ -7,12 +7,7 @@ import * as productActions from "../../redux/actions/productActions";
 
 class CategoryList extends Component {
   componentDidMount() {
-    //! ÇOK ÖNEMLİ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //* altta category'leri getirmek için yaptıgımız şeyi h3'de kullandık
-    //* altta actionlaro propsa bağlıyoruz o yüzden this.props.actions.getcategory... diye yaptık. kodu takip edersek mantıgını anlarız
-    this.props.actions.getCategories(); //! kısaca burada uygulama açıldıgında state değişiyor, ( category'leri çekiyoruz yani categoryler geliyor)
-    //! actions.getCategories çalışıyor -> getCategories'de getCategoriesSuccess'i çalıştırıyor -> getCategoriesSuccess'de actionTypes.GET_CATEGORIES_SUCCESS bunu çalıştırdğınıdan dolayı categoryListReducer çalışıyor -> categoryListReducer burda da state'i payload vermiştik, payload'da category bilgileri vardır ve categoryler gelmektedir.
-    //? NOT: KONTROL ETMEK İÇİN ALTTA DİVİN İÇİNE  <h3>Categories: {this.props.categories.length}</h3>  YAZARAK UZUNLUK GELİYORSA CATEGORY DATASI DA GELİYOR KONTROLÜ YAPABİLİRİZ
+    this.props.actions.getCategories(); 
   }
 
   selectCategory = (category) => {
@@ -28,7 +23,6 @@ class CategoryList extends Component {
         </h2>
         <ListGroup action active>
           {this.props.categories.map((category) => (
-            //! bunun içindeki onClick: changeCategory ile seçili category'yi getirme.    active={category.id===this.props.currentCategory --> seçilen mavi olur
             <ListGroupItem
               color="success"
               active={category.id === this.props.currentCategory.id}
@@ -44,26 +38,20 @@ class CategoryList extends Component {
   }
 }
 
-//! belirlediğimiz state'i props'a bağla:
 function mapStateToProps(state) {
   return {
-    //! state'de bulunan reducerları currentCategory'e map et.
     currentCategory: state.changeCategoryReducer,
     categories: state.categoryListReducer,
   };
 }
 
-//! action'ları props'a bağla:
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      //! category'leri getirmek için:
       getCategories: bindActionCreators(
         categoryActions.getCategories,
         dispatch
-      ), //! parametre olarak dispatch(sevk etmek)
-
-      //! seçili category'yi getirmek için:
+      ), 
       changeCategory: bindActionCreators(
         categoryActions.changeCategory,
         dispatch
@@ -73,5 +61,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-//! export edip connect ile redux'a bağlanıyoruz
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);
