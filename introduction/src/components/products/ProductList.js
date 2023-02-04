@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 
 class ProductList extends Component {
   componentDidMount() {
-    //! uygulama açıldıgında çağırılacak şeyler
     this.props.actions.getProducts();
   }
 
@@ -68,8 +67,7 @@ class ProductList extends Component {
 
 function mapStateToProps(state) {
   return {
-    //! redux'tan gelen data artık propstadır.
-    currentCategory: state.changeCategoryReducer, //* mevcut kategoriyi alıyoruz
+    currentCategory: state.changeCategoryReducer, 
     products: state.productListReducer,
   };
 }
@@ -77,7 +75,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      //! category'leri getirmek için:
       getProducts: bindActionCreators(productActions.getProducts, dispatch),
       addToCart: bindActionCreators(cartActions.addToCart, dispatch),
     },
