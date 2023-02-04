@@ -16,13 +16,11 @@ import alertify from "alertifyjs";
 
 class CartSummary extends Component {
   removeFromCart(product) {
-    //!karttan silme işlemi
     this.props.actions.removeFromCart(product);
     alertify.error(product.productName + " Deleted to cart", "success", 2);
   }
 
   renderEmpty() {
-    //! if cart is empty:
     return (
       <NavItem>
         <h3>
@@ -35,21 +33,17 @@ class CartSummary extends Component {
   }
 
   renderSummary() {
-    //! if cart isn't empty:
     return (
       <UncontrolledDropdown nav inNavbar>
-
           <Badge color="success">
-        
             <h5> <DropdownToggle nav caret>
               Your Cart
             </DropdownToggle></h5>
           </Badge>
-       
         <DropdownMenu right>
           {this.props.cart.map(
             (
-              cartItem //! her bir cartItem için css kodu çalıştır. ( parantez açıyorsa css kodu çalışır, süslü parantez açarsak js kodu çalışır)
+              cartItem 
             ) => (
               <DropdownItem key={cartItem.product.id}>
                 <Badge
@@ -78,7 +72,7 @@ class CartSummary extends Component {
     return (
       <div>
         {
-          this.props.cart.length > 0 ? this.renderSummary() : this.renderEmpty() //! sepetteki eleman sayısı>0 ise renderSummary() yoksa renderEmpty() çalışır
+          this.props.cart.length > 0 ? this.renderSummary() : this.renderEmpty() 
         }
       </div>
     );
@@ -86,7 +80,6 @@ class CartSummary extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  //!(actions'ı kullanabilmek için yapıyoruz): cart'da silme işlemi için yapıoz
   return {
     actions: {
       removeFromCart: bindActionCreators(cartActions.removeFromCart, dispatch),
@@ -95,9 +88,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  //!(bunu state'e bağlanmak için kullanıyoruz.) state'i props'a bağlıyoruz.
   return {
-    cart: state.cartReducer, //! cartReducer state'i kullandıgımız yerdir ve state'i o yüzden burdan alıyoruz
+    cart: state.cartReducer, 
   };
 }
 
